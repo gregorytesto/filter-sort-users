@@ -12,8 +12,16 @@ const App = () => {
 		return lowerCaseName.includes(lowerCaseSearchInput);
 	});
 
+	let preprocessing = filteredUsers.map((user) => {
+		let formattedCurrency = String(user.currency).replace("$", "");
+		user.currency = Number(formattedCurrency); // Referencial Types
+		return user;
+	});
 	if (sortInput) {
-		filteredUsers.sort((a, b) => {
+		// currency: "$93.74",
+		// 93.74
+
+		preprocessing.sort((a, b) => {
 			if (a[sortInput] < b[sortInput]) {
 				return -1;
 			}
@@ -24,10 +32,10 @@ const App = () => {
 		});
 	}
 
-	let renderUsers = filteredUsers.map((user, index) => {
+	let renderUsers = preprocessing.map((user, index) => {
 		return (
 			<li key={index}>
-				{user.name} - {user.currency}
+				{user.name} - ${user.currency}
 			</li>
 		);
 	});
